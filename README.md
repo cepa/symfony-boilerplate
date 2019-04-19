@@ -18,13 +18,14 @@ your valuation, so... why not.
 
 ## This project, is the _solution_! 
 ![screen2.png](https://github.com/cepa/symfony-boilerplate/blob/master/docs/screen2.png)
+
 You can clone it and focus on what you really wanna do - coding the app, without 
 having to glue the bloody framework components first and mess with any DevOpsish stuff.
 
 ## Why had I created this?
 Because I've just spent 5 hours of my life on bootstraping a fucking framework...
+It had taken me a shitload more time when I did it the first time, duh.
 ![screen3.png](https://github.com/cepa/symfony-boilerplate/blob/master/docs/screen3.png)
-And it had taken me a shitload more time when I did it the first time, duh.
 
 ## Anyway
 Here's how to use this crap, clone it first though.
