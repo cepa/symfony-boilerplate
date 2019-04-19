@@ -9,7 +9,7 @@ all: build
 build:
 	touch .env
 	cd .. && docker-compose run --rm -w /var/www/portal php composer install
-	docker run --rm -v $(CURDIR):/var/www/portal -w /var/www/portal symfonys/node:$(VERSION) yarn install
+	docker run --rm -v $(CURDIR):/var/www/portal -w /var/www/portal symfony/node:$(VERSION) yarn install
 	docker run --rm -v $(CURDIR):/var/www/portal -w /var/www/portal symfony/node:$(VERSION) yarn encore dev
 
 test:
