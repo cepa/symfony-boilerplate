@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  mysql:
+    container_name: symfony_mysql
+    image: symfony/mysql:$VERSION
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    ports:
+      - "$DOCKER_MYSQL_PORT:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASS
+
+  php:
+    container_name: symfony_php
+    image: symfony/php:$VERSION
+    depends_on:
+      - mysql
+    volumes:
+      - ./portal:/var/www/portal
+    environment:
+      APP_ENV:        $PORTAL_APP_ENV
+      APP_SECRET:     $PORTAL_APP_SECRET
+      DATABASE_URL:   "mysql://$PORTAL_DB_USER:$PORTAL_DB_PASS@$MYSQL_HOST:$MYSQL_PORT/$PORTAL_DB_NAME"
+
+
+  nginx:
+    container_name: symfony_nginx
+    image: symfony/nginx:$VERSION
+    depends_on:
+      - php
+    ports:
+      - "$DOCKER_HTTP_PORT:80"
+      - "$DOCKER_HTTPS_PORT:443"
+    volumes:
+      - ./portal:/var/www/portal
+
+volumes:
+  mysql-data:

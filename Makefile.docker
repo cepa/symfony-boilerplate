@@ -1,0 +1,24 @@
+CONTAINERS = \
+	mysql \
+	nginx \
+	node \
+	php
+
+.PHONY: docker_build_base_images docker_build docker_up docker_down docker_logs
+
+docker_build_base_images:
+	for CONTAINER in $(CONTAINERS); do \
+		docker build -t symfony/$$CONTAINER:$(VERSION) docker/$$CONTAINER; \
+	done
+
+docker_build: docker_build_base_images
+	docker-compose build
+
+docker_up: docker_build
+	docker-compose up -d`
+
+docker_down:
+	docker-compose down
+
+docker_logs:
+	docker-compose logs -f

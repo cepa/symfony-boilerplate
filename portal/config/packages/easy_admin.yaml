@@ -1,0 +1,38 @@
+easy_admin:
+  site_name: 'Awesome App'
+
+  formats:
+    date: 'Y-m-d'
+    time: 'H:i:s'
+    datetime: 'Y-m-d H:i:s'
+
+  entities:
+
+    Admin:
+      class: Core\Entity\Admin
+      label: 'Admins'
+      list:
+        title: 'Admins'
+        fields:
+          - id
+          - name
+          - { property: 'email', type: 'email' }
+          - { property: 'is_active', type: 'toggle', label: 'Active?' }
+          - createdAt
+        actions: ['show', 'edit', 'delete']
+        dql_filter: 'entity.isDeleted = false'
+      show:
+        fields:
+          - id
+          - name
+          - { property: 'email', type: 'email' }
+          - { property: 'is_active', type: 'toggle', label: 'Active?' }
+          - createdAt
+          - lastLoginAt
+          - lastLoginIp
+          - lastUserAgent
+      form:
+        fields:
+          - name
+          - { property: 'email', type: 'email' }
+          - { property: 'passwordHash', type: 'password', label: 'Password' }

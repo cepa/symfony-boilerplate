@@ -1,0 +1,36 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    Core\:
+        resource: '../src/Core/*'
+        #exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Fixtures\DataFixtures\:
+        resource: '../fixtures/DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
+    Admin\Controller\:
+      resource: '../src/Admin/Controller'
+      tags: ['controller.service_arguments']
+
+    Portal\Controller\:
+        resource: '../src/Portal/Controller'
+        tags: ['controller.service_arguments']
+
+    core.admin:
+        class: Core\Service\AdminService
+        public: true
+
+    admin.security.login_form_guard:
+        class: 'Admin\Security\LoginFormGuard'

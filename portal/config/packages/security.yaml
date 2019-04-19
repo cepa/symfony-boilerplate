@@ -1,0 +1,38 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+
+        admin_provider:
+            entity:
+                class: Core\Entity\Admin
+                property: email
+
+    encoders:
+        Core\Entity\Admin: bcrypt
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            pattern: ^/admin
+            anonymous: ~
+            provider: admin_provider
+            guard:
+                authenticators:
+                    - admin.security.login_form_guard
+            logout:
+                path: /admin/logout
+                target: /admin
+
+        portal:
+            pattern: ^/
+            anonymous: ~
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, role: ROLE_ADMIN }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

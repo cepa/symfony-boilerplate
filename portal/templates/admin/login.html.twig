@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  html, body {
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0;
+  }
+
+  .admin-login-panel {
+    width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    #border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px #bbb;
+  }
+
+  .admin-login-panel .body {
+    padding: 20px;
+  }
+
+  .admin-login-panel .logo {
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .admin-login-panel .form {
+    padding: 20px 20px 0 20px;
+  }
+
+  .admin-login-panel .btn {
+    margin: 0 auto;
+    display: block;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .admin-login-panel .tweak-bottom-border {
+    border-bottom: 0 !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .admin-login-panel .tweak-top-border {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+{% endblock %}
+
+{% block body %}
+
+  <!-- Admin Login -->
+
+  <div class="admin-login-panel">
+    <div class="body">
+      <img class="logo" src="/static/logo.png"/>
+      <form class="form" action="{{ path('admin_login') }}" method="POST">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text tweak-bottom-border"><i class="fas fa-user-tie"></i></div>
+            </div>
+            <input class="form-control form-control-lg tweak-bottom-border" type="text" name="login_form[_username]" placeholder="Username" required/>
+          </div>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text tweak-top-border"><i class="fas fa-lock"></i></div>
+            </div>
+            <input class="form-control form-control-lg tweak-top-border" type="password" name="login_form[_password]" placeholder="Password" required/>
+          </div>
+        </div>
+        {% if error %}
+          <div class="alert alert-danger text-center" role="alert">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+          </div>
+        {% endif %}
+        <div class="form-group">
+          <button type="submit" class="btn btn-lg btn-success">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

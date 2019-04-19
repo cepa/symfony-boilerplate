@@ -1,1 +1,1 @@
-# symfony-boilerplate
+# Symfony Boilerplate

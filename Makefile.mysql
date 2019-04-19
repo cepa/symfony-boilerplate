@@ -1,0 +1,12 @@
+
+MYSQL_TIMESTAMP := $(shell date "+%Y%m%d_%H%M%S")
+
+mysql_create_database:
+	docker-compose exec -T mysql mysql -u"root"  -p"$(MYSQL_ROOT_PASS)" -e "CREATE DATABASE IF NOT EXISTS $(PORTAL_DB_NAME)"
+	docker-compose exec -T mysql mysql -u"root"  -p"$(MYSQL_ROOT_PASS)" -e "GRANT ALL PRIVILEGES ON $(PORTAL_DB_NAME).* TO $(PORTAL_DB_USER)@'%' IDENTIFIED BY '$(PORTAL_DB_PASS)'"
+
+mysql_drop_database:
+	docker-compose exec -T mysql mysql -u"root"  -p"$(MYSQL_ROOT_PASS)" -e "DROP DATABASE IF EXISTS $(PORTAL_DB_NAME)"
+
+mysql:
+	docker-compose exec mysql mysql -u"root" -p"$(MYSQL_ROOT_PASS)"

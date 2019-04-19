@@ -1,0 +1,12 @@
+**/*.log
+**/._*
+**/.DS_Store
+**/.gitignore
+**/.gitattributes
+**/Thumbs.db
+
+/var
+/tests/results
+/node_modules
+
+.dockerignore
