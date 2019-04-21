@@ -1,5 +1,5 @@
 easy_admin:
-  site_name: 'Awesome App'
+  site_name: 'Boilerplate'
 
   formats:
     date: 'Y-m-d'

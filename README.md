@@ -75,12 +75,31 @@ _Admin_
 - http://localhost:55080/admin
 admin@domain.tld / s3cr3t
 
+## Features
+- Placeholder for the portal landing
+- User login and logout
+- User registration
+- Password reminder
+- Admin panel with Easyadmin
+- Admin management
+- User management
+- Mailing
+- Templates
+
+![screen4.png](https://github.com/cepa/symfony-boilerplate/blob/master/docs/screen4.png)
+
+![screen5.png](https://github.com/cepa/symfony-boilerplate/blob/master/docs/screen5.png)
+
+![screen6.png](https://github.com/cepa/symfony-boilerplate/blob/master/docs/screen6.png)
+
+
 ## What is included
 - Symfony 4
 - Easyadmin for _/admin_
 - Doctrine ORM
-- Doctrine Fixtures
+- Doctrine Fixtures with Nelmio Alice
 - Twig
+- Swiftmailer
 - PHPUnit (Paratest)
 - Symfony Encore (for frontend stuff)
 - Docker

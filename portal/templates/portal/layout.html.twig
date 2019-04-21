@@ -3,7 +3,7 @@
 {% block body %}
 
   <nav class="app-navbar navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="{{ path('portal_index') }}">RnD</a>
+    <a class="navbar-brand" href="{{ path('portal_index') }}">Boilerplate</a>
 
     <div class="expand navbar-expand navbar-right ml-auto">
       <ul class="navbar-nav">
@@ -16,7 +16,7 @@
               <span>{{ app.user.name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="appAccountMenuDropdownBtn">
-              <a class="dropdown-item" href="{{ path('portal_logout') }}">Wyloguj</a>
+              <a class="dropdown-item" href="{{ path('portal_logout') }}">Logout</a>
             </div>
           </li>
         {% else %}
