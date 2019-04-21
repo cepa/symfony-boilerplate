@@ -1,0 +1,25 @@
+@import "~bootstrap/scss/bootstrap";
+
+html, body {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #222;
+  font-size: 14px;
+}
+
+main {
+  margin-top: 60px;
+}
+
+@media (max-width: 991px) {
+  main {
+    margin-top: 50px;
+  }
+}
+
+@import "./form.scss";
+@import "./login.scss";
+@import "./navbar.scss";

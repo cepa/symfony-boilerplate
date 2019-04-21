@@ -1,0 +1,23 @@
+{% extends 'portal/layout.html.twig' %}
+
+{% block main %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        {% include 'portal/partials/flash-messages.html.twig' %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 offset-2 app-login">
+        <h1 class="border-bottom">Sign in</h1>
+        {% include 'portal/forms/login-form.html.twig' %}
+        <div class="links text-center">
+          <a href="{{ path('portal_registration') }}">Register new account</a> |
+          <a href="{{ path('portal_password_reminder') }}">Lost password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

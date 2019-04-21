@@ -1,0 +1,7 @@
+Core\Entity\User:
+  user{1..250}:
+    name: '<name()>'
+    uniqueId (unique): '<userUniqueId()>'
+    email (unique): '<email()>'
+    password_hash: '<(substr(md5(uniqid(rand(), true)), 0, 16))>'
+    createdAt: '<dateTimeBetween("-100 days", "now")>'

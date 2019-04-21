@@ -100,4 +100,9 @@ abstract class AbstractUser extends Entity
     {
         return $this->lastUserAgent;
     }
+
+    public function __toString(): string
+    {
+        return (string) $this->getName();
+    }
 }

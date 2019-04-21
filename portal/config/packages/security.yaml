@@ -7,8 +7,14 @@ security:
                 class: Core\Entity\Admin
                 property: email
 
+        user_provider:
+            entity:
+                class: Core\Entity\User
+                property: email
+
     encoders:
         Core\Entity\Admin: bcrypt
+        Core\Entity\User: bcrypt
 
     firewalls:
         dev:
@@ -29,6 +35,13 @@ security:
         portal:
             pattern: ^/
             anonymous: ~
+            provider: user_provider
+            guard:
+                authenticators:
+                    - portal.security.login_form_guard
+            logout:
+                path: /logout
+                target: /
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

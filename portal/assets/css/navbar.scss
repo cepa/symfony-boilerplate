@@ -1,0 +1,12 @@
+.app-navbar .avatar-wrapper {
+  position: absolute;
+}
+
+.app-navbar .avatar {
+  width: 32px;
+  border-radius: 50%;
+  box-shadow: 0 0 1px #000;
+  position: relative;
+  left: -40px;
+  top: -5px;
+}

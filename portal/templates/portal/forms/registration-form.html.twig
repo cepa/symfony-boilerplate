@@ -1,0 +1,45 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+<form class="form app-form" novalidate="" autocomplete="off"  action="{{ path('portal_registration') }}" method="POST">
+  {{ form_widget(form._token) }}
+  <div class="form-group row">
+    <div class="col-md-8">
+      <label class="form-label">Enter your email address</label>
+      {{ form_widget(form.email) }}
+      {{ form_errors(form.email) }}
+      <div class="text-muted">
+        <strong>Your email address is your username to sign in.</strong>
+        After the successful registration, we will send an email with a link to activate your account.
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-8">
+      <label class="form-label">Name your account</label>
+      {{ form_widget(form.name) }}
+      {{ form_errors(form.name) }}
+      <div class="text-muted">
+        Your name visible to other user.
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-8">
+      <label class="form-label">Password</label>
+      {{ form_widget(form.password.first) }}
+      {{ form_widget(form.password.second) }}
+      {{ form_errors(form.password.first) }}
+      <div class="invalid-feedback">
+        Passwords mismatch.
+      </div>
+      <div class="text-muted">
+        Password must be at least 8 characters long.
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-8">
+      <button type="submit" class="btn btn-lg btn-success btn-submit">Sign up</button>
+    </div>
+  </div>
+</form>

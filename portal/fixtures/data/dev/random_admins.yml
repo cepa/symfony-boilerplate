@@ -1,0 +1,7 @@
+Core\Entity\Admin:
+  admin{1..10}:
+    name: '<name()>'
+    email (unique): '<email()>'
+    password_hash: '<(substr(md5(uniqid(rand(), true)), 0, 16))>'
+    isActive: false
+    createdAt: '<dateTimeBetween("-100 days", "now")>'

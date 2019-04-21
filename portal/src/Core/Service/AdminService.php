@@ -94,4 +94,12 @@ class AdminService
     {
         return $this->passwordEncoder->isPasswordValid($admin, $password);
     }
+
+    public function listAdmins(ListParams $params = null): ListContainer
+    {
+        return new ListContainer($this->repository
+            ->buildAdminListQuery($params)
+            ->getQuery()
+            ->getResult());
+    }
 }

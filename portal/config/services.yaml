@@ -12,6 +12,10 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+        bind:
+            $emailFrom: '%env(APP_EMAIL_FROM)%'
+            $emailName: '%env(APP_EMAIL_NAME)%'
+
     Core\:
         resource: '../src/Core/*'
         #exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
@@ -32,5 +36,16 @@ services:
         class: Core\Service\AdminService
         public: true
 
+    core.mailer:
+        class: Core\Service\MailerService
+        public: true
+
+    core.user:
+        class: Core\Service\UserService
+        public: true
+
     admin.security.login_form_guard:
         class: 'Admin\Security\LoginFormGuard'
+
+    portal.security.login_form_guard:
+        class: 'Portal\Security\LoginFormGuard'

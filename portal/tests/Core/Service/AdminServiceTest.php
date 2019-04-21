@@ -3,6 +3,7 @@
 namespace Tests\Core\Service;
 
 use Core\Entity\Admin;
+use Core\Helper\ListContainer;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Tests\ServiceTestCase;
 use Tests\Traits\AdminServiceTrait;
@@ -71,6 +72,19 @@ class AdminServiceTest extends ServiceTestCase
             $this->fail('Exception has not been thrown');
         } catch (\RuntimeException $e) {
             // Ok
+        }
+    }
+
+
+    public function testListAdmins()
+    {
+        $list = $this->getAdminService()->listAdmins();
+        $this->assertInstanceOf(ListContainer::class, $list);
+        $this->assertTrue($list->getCount() > 0);
+        /** @var Admin $admin */
+        foreach ($list->getItems() as $admin) {
+            $this->assertTrue($admin->isActive());
+            $this->assertFalse($admin->isDeleted());
         }
     }
 }

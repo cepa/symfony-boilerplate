@@ -4,7 +4,7 @@ CONTAINERS = \
 	node \
 	php
 
-.PHONY: docker_build_base_images docker_build docker_up docker_down docker_logs
+.PHONY: docker_build_base_images
 
 docker_build_base_images:
 	for CONTAINER in $(CONTAINERS); do \

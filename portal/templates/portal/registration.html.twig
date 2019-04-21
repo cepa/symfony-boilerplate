@@ -1,0 +1,17 @@
+{% extends 'portal/layout.html.twig' %}
+
+{% block main %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="border-bottom">Sign up</h1>
+        {% include 'portal/forms/registration-form.html.twig' %}
+      </div>
+    </div>
+  </div>
+
+  <div class="app-call" data-method="initRegistrationForm">
+  </div>
+
+{% endblock %}

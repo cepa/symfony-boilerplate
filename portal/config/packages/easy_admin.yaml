@@ -8,6 +8,35 @@ easy_admin:
 
   entities:
 
+    User:
+      class: Core\Entity\User
+      label: 'Users'
+      list:
+        title: 'Users'
+        fields:
+          - id
+          - name
+          - { property: 'email', type: 'email' }
+          - { property: 'is_active', type: 'toggle', label: 'Active?' }
+          - createdAt
+        actions: ['show', 'edit', 'delete']
+        dql_filter: 'entity.isDeleted = false'
+      show:
+        fields:
+          - id
+          - name
+          - { property: 'email', type: 'email' }
+          - { property: 'is_active', type: 'toggle', label: 'Active?' }
+          - createdAt
+          - lastLoginAt
+          - lastLoginIp
+          - lastUserAgent
+      form:
+        fields:
+          - name
+          - { property: 'email', type: 'email' }
+          - { property: 'passwordHash', type: 'password', label: 'Password' }
+
     Admin:
       class: Core\Entity\Admin
       label: 'Admins'

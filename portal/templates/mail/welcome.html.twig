@@ -1,0 +1,15 @@
+{% extends 'mail/base.html.twig' %}
+
+{% set activation_url = url('portal_registration_activate', {'uniqueId': user.uniqueId, 'token': user.token}) %}
+
+{% block body %}
+
+  <p>Hi {{ user.name }}!</p>
+  {% if not user.isActive %}
+    <p>
+      Click on the following link to activate your account <br />
+      <a href="{{ activation_url }}">{{ activation_url }}</a>
+    </p>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,7 @@
+Core\Entity\User:
+  user_test:
+    name: 'Test User'
+    uniqueId (unique): '<userUniqueId()>'
+    email (unique): 'test@test.tld'
+    password_hash: '<userPasswordEncoder("test")>'
+    createdAt: '<dateTimeBetween("now", "now")>'

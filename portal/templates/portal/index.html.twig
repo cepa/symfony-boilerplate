@@ -1,8 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'portal/layout.html.twig' %}
 
-{% block body %}
+{% block main %}
 
-  <h1>Oh... ah... yeah <span class="fa fa-heart"></h1>
-  <h2>This is the placeholder for your new $1G app</span></h2>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        {% include 'portal/partials/flash-messages.html.twig' %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>This is the index placeholder.</p>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

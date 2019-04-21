@@ -27,8 +27,10 @@ services:
     environment:
       APP_ENV:        $PORTAL_APP_ENV
       APP_SECRET:     $PORTAL_APP_SECRET
+      APP_EMAIL_FROM: $PORTAL_APP_EMAIL_FROM
+      APP_EMAIL_NAME: $PORTAL_APP_EMAIL_NAME
       DATABASE_URL:   "mysql://$PORTAL_DB_USER:$PORTAL_DB_PASS@$MYSQL_HOST:$MYSQL_PORT/$PORTAL_DB_NAME"
-
+      MAILER_URL:     "smtp://$SMTP_HOST:$SMTP_PORT?encryption=$SMTP_ENCR&auth_mode=$SMTP_AUTH&username=$SMTP_USER&password=$SMTP_PASS"
 
   nginx:
     container_name: symfony_nginx
