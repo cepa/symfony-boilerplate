@@ -20,7 +20,7 @@ class PasswordResetTest extends FunctionalTestCase
          */
         $crawler = $this->client->request('GET', '/lost-password');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Lost password?', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Lost password?', $this->client->getResponse()->getContent());
 
         $form = $crawler->filter('.app-form')->form();
         $form['password_reminder_form[email]'] = self::EMAIL;
@@ -28,7 +28,7 @@ class PasswordResetTest extends FunctionalTestCase
         $this->client->enableProfiler();
         $this->client->submit($form);
         $this->assertEquals(Response::HTTP_ACCEPTED, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Check your mailbox', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Check your mailbox', $this->client->getResponse()->getContent());
 
         /*
          * Verify email send to user.
@@ -41,7 +41,7 @@ class PasswordResetTest extends FunctionalTestCase
         $this->assertEquals('Change password', $message->getSubject());
         $this->assertEquals(self::EMAIL, key($message->getTo()));
         $this->assertEquals('text/html', $message->getContentType());
-        $this->assertContains('Click on the following link to reset your password', $message->getBody());
+        $this->assertStringContainsString('Click on the following link to reset your password', $message->getBody());
 
         /*
          * Make user inactive to check if password reset re-activates the account.
@@ -56,14 +56,14 @@ class PasswordResetTest extends FunctionalTestCase
             'uniqueId' => $user->getUniqueId(),
             'token' => $user->getToken()
         ]);
-        $this->assertContains($resetPath, $message->getBody());
+        $this->assertStringContainsString($resetPath, $message->getBody());
 
         /**
          * Reset page, fill form and submit.
          */
         $crawler = $this->client->request('GET', $resetPath);
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Reset your password', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Reset your password', $this->client->getResponse()->getContent());
 
         $form = $crawler->filter('.app-form')->form();
         $form['password_reset_form[password][first]'] = self::NEW_PASSWORD;
@@ -86,14 +86,14 @@ class PasswordResetTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('index', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('index', $this->client->getResponse()->getContent());
     }
 
     public function testEmailNotFoundFail()
     {
         $crawler = $this->client->request('GET', '/lost-password');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Lost password?', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Lost password?', $this->client->getResponse()->getContent());
 
         $form = $crawler->filter('.app-form')->form();
         $form['password_reminder_form[email]'] = 'dummy@test.tld';
@@ -101,7 +101,7 @@ class PasswordResetTest extends FunctionalTestCase
         $this->client->enableProfiler();
         $this->client->submit($form);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('has not been found!', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('has not been found!', $this->client->getResponse()->getContent());
 
         $collector = $this->client->getProfile()->getCollector('swiftmailer');
         $this->assertEquals(0, $collector->getMessageCount());
@@ -124,7 +124,7 @@ class PasswordResetTest extends FunctionalTestCase
         $crawler = $this->client->request('GET', $resetPath);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Invalid user token!', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Invalid user token!', $this->client->getResponse()->getContent());
     }
 
     public function testInvalidNewPasswordFail()
@@ -141,7 +141,7 @@ class PasswordResetTest extends FunctionalTestCase
 
         $crawler = $this->client->request('GET', $resetPath);
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Reset your password', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Reset your password', $this->client->getResponse()->getContent());
 
         $form = $crawler->filter('.app-form')->form();
         $form['password_reset_form[password][first]'] = '';
@@ -149,7 +149,7 @@ class PasswordResetTest extends FunctionalTestCase
 
         $this->client->submit($form);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('This value should not be blank.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('This value should not be blank.', $this->client->getResponse()->getContent());
 
         $form = $crawler->filter('.app-form')->form();
         $form['password_reset_form[password][first]'] = 'xxx';
@@ -157,7 +157,7 @@ class PasswordResetTest extends FunctionalTestCase
 
         $this->client->submit($form);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('This value is not valid.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('This value is not valid.', $this->client->getResponse()->getContent());
 
         $form = $crawler->filter('.app-form')->form();
         $form['password_reset_form[password][first]'] = 'xxx';
@@ -165,6 +165,6 @@ class PasswordResetTest extends FunctionalTestCase
 
         $this->client->submit($form);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('This value is not valid.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('This value is not valid.', $this->client->getResponse()->getContent());
     }
 }

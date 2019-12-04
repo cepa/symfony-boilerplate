@@ -47,13 +47,13 @@ class AdminServiceTest extends ServiceTestCase
         $admin = $service->fetchById($admin->getId());
         $this->assertEquals(self::EMAIL, $admin->getEmail());
         $this->assertEquals(self::NAME, $admin->getName());
-        $this->assertContains('ROLE_ADMIN', $admin->getRoles());
+        $this->assertTrue(in_array('ROLE_ADMIN', $admin->getRoles()));
 
         $admin = $service->fetchByEmail(self::EMAIL);
         $this->assertEquals($id, $admin->getId());
         $this->assertEquals(self::EMAIL, $admin->getEmail());
         $this->assertEquals(self::NAME, $admin->getName());
-        $this->assertContains('ROLE_ADMIN', $admin->getRoles());
+        $this->assertTrue(in_array('ROLE_ADMIN', $admin->getRoles()));
 
         $this->assertTrue($service->validatePassword($admin, self::PASSWORD));
         $this->assertFalse($service->validatePassword($admin, 'foo'));

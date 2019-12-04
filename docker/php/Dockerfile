@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-stretch
+FROM php:7.3-fpm-buster
 RUN apt-get update && apt-get install -y \
   pkg-config wget curl git unzip locales-all \
   libcurl4-openssl-dev \
@@ -13,11 +13,8 @@ RUN apt-get update && apt-get install -y \
   zlib1g-dev \
   libxslt-dev \
   libmagickwand-dev \
+  libzip-dev \
   iputils-ping
-RUN docker-php-ext-configure gd \
-  --with-freetype-dir=/usr/include/ \
-  --with-jpeg-dir=/usr/include/ \
-  --with-libxml-dir=/usr/include/
 RUN docker-php-ext-install -j$(nproc) \
   curl \
   iconv \
@@ -38,25 +35,24 @@ RUN docker-php-ext-install -j$(nproc) \
   sysvsem \
   sysvshm \
   tokenizer \
-  wddx \
   xsl
-RUN pecl install memcached-3.0.4
+RUN pecl install memcached-3.1.5
 RUN docker-php-ext-enable memcached
-RUN pecl install redis-4.2.0
+RUN pecl install redis-5.1.1
 RUN docker-php-ext-enable redis
-RUN pecl install imagick-3.4.3
+RUN pecl install imagick-3.4.4
 RUN docker-php-ext-enable imagick
-RUN pecl install xdebug-2.7.0beta1
+RUN pecl install xdebug-2.8.1
 RUN docker-php-ext-enable xdebug
 RUN rm -rf /tmp/pecl /tmp/pear
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN wget "https://getcomposer.org/download/1.8.0/composer.phar" -O /usr/local/bin/composer
+RUN wget "https://getcomposer.org/download/1.9.1/composer.phar" -O /usr/local/bin/composer
 RUN chmod a+x /usr/local/bin/composer
 RUN composer --version
 
-RUN wget "https://phar.phpunit.de/phpunit-6.5.phar" -O /usr/local/bin/phpunit
+RUN wget "https://phar.phpunit.de/phpunit-8.phar" -O /usr/local/bin/phpunit
 RUN chmod a+x /usr/local/bin/phpunit
 RUN phpunit --version
 

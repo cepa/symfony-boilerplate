@@ -24,7 +24,7 @@ class MailerServiceTest extends ServiceTestCase
         $this->assertInstanceOf(\Swift_Message::class, $message);
         $this->assertEquals('test', $message->getSubject());
         $this->assertEquals('text/html', $message->getContentType());
-        $this->assertContains('Hello!', $message->getBody());
+        $this->assertStringContainsString('Hello!', $message->getBody());
 
         $mailer->send($message, ['dummy@domain.tld' => 'Dummy']);
     }

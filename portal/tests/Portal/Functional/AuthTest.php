@@ -63,7 +63,7 @@ class AuthTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Invalid email or password.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Invalid email or password.', $this->client->getResponse()->getContent());
     }
 
     public function testAdminLoginAttemptFailure()
@@ -78,7 +78,7 @@ class AuthTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Invalid email or password.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Invalid email or password.', $this->client->getResponse()->getContent());
     }
 
     public function testInactiveLoginFailure()
@@ -97,6 +97,6 @@ class AuthTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Invalid email or password.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Invalid email or password.', $this->client->getResponse()->getContent());
     }
 }

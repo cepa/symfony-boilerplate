@@ -20,7 +20,7 @@ class AuthTest extends FunctionalTestCase
     {
         $crawler = $this->client->request('GET', '/admin/login');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Admin', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Admin', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton('Login')->form();
         $form['login_form[_username]'] = self::ADMIN_EMAIL;
@@ -31,7 +31,7 @@ class AuthTest extends FunctionalTestCase
         $this->client->followRedirect();
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('easyadmin', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('easyadmin', $this->client->getResponse()->getContent());
 
         $admin = $this->getAdminService()->fetchByEmail(self::ADMIN_EMAIL);
         $this->assertInstanceOf(\DateTime::class, $admin->getLastloginAt());
@@ -43,7 +43,7 @@ class AuthTest extends FunctionalTestCase
     {
         $crawler = $this->client->request('GET', '/admin/login');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Admin', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Admin', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton('Login')->form();
         $form['login_form[_username]'] = self::ADMIN_EMAIL;
@@ -52,14 +52,14 @@ class AuthTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Invalid credentials.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Invalid credentials.', $this->client->getResponse()->getContent());
     }
 
     public function testUserLoginAttemptFailure()
     {
         $crawler = $this->client->request('GET', '/admin/login');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Admin', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Admin', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton('Login')->form();
         $form['login_form[_username]'] = self::USER_EMAIL;
@@ -68,7 +68,7 @@ class AuthTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Username could not be found.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Username could not be found.', $this->client->getResponse()->getContent());
     }
 
     public function testInactiveLoginFailure()
@@ -79,7 +79,7 @@ class AuthTest extends FunctionalTestCase
 
         $crawler = $this->client->request('GET', '/admin/login');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Admin', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Admin', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton('Login')->form();
         $form['login_form[_username]'] = self::ADMIN_EMAIL;
@@ -88,6 +88,6 @@ class AuthTest extends FunctionalTestCase
         $crawler = $this->client->submit($form);
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Invalid credentials.', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Invalid credentials.', $this->client->getResponse()->getContent());
     }
 }

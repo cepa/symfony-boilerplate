@@ -39,7 +39,7 @@ class MailerService
 
     public function __construct(LoggerInterface $logger,
                                 \Swift_Mailer $mailer,
-                                \Twig_Environment $twig,
+                                \Twig\Environment $twig,
                                 string $emailFrom,
                                 string $emailName,
                                 AdminService $adminService

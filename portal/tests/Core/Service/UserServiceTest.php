@@ -54,7 +54,7 @@ class UserServiceTest extends ServiceTestCase
         $user = $service->fetchById($user->getId());
         $this->assertEquals(self::EMAIL, $user->getEmail());
         $this->assertEquals(self::NAME, $user->getName());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        $this->assertTrue(in_array('ROLE_USER', $user->getRoles()));
 
         $user = $service->fetchByUniqueId($uniqueId);
         $this->assertEquals($id, $user->getId());
@@ -63,7 +63,7 @@ class UserServiceTest extends ServiceTestCase
         $this->assertEquals($id, $user->getId());
         $this->assertEquals(self::EMAIL, $user->getEmail());
         $this->assertEquals(self::NAME, $user->getName());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        $this->assertTrue(in_array('ROLE_USER', $user->getRoles()));
 
         $this->assertTrue($service->validatePassword($user, self::PASSWORD));
         $this->assertFalse($service->validatePassword($user, 'foo'));

@@ -25,7 +25,7 @@ class RegistrationTest extends FunctionalTestCase
          */
         $crawler = $this->client->request('GET', '/sign-up');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton(self::REGISTRATION_BUTTON)->form();
         $form['registration_form[name]'] = self::NAME;
@@ -59,7 +59,7 @@ class RegistrationTest extends FunctionalTestCase
         $this->assertEquals(self::EMAIL, key($message->getTo()));
         $this->assertEquals('test@devgrid.net', key($message->getReplyTo()));
         $this->assertEquals('text/html', $message->getContentType());
-        $this->assertContains(sprintf('Hi %s!', self::NAME), $message->getBody());
+        $this->assertStringContainsString(sprintf('Hi %s!', self::NAME), $message->getBody());
 
         /** @var RouterInterface $router */
         $router = $this->get('router');
@@ -67,7 +67,7 @@ class RegistrationTest extends FunctionalTestCase
             'uniqueId' => $user->getUniqueId(),
             'token' => $user->getToken()
         ]);
-        $this->assertContains($activationPath, $message->getBody());
+        $this->assertStringContainsString($activationPath, $message->getBody());
 
         /*
          * Verify email broadcasted to admins.
@@ -76,7 +76,7 @@ class RegistrationTest extends FunctionalTestCase
         $message = $collector->getMessages()[1];
         $this->assertTrue($message instanceof \Swift_Message);
         $this->assertEquals(sprintf('User #%d registered account', $user->getId()), $message->getSubject());
-        $this->assertNotContains($user->getPasswordHash(), $message->getBody());
+        $this->assertStringNotContainsString($user->getPasswordHash(), $message->getBody());
 
         /*
          * Activate user account.
@@ -104,19 +104,19 @@ class RegistrationTest extends FunctionalTestCase
     {
         $crawler = $this->client->request('GET', '/sign-up');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton(self::REGISTRATION_BUTTON)->form();
         $this->client->submit($form);
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
-        $this->assertContains('This value should not be blank', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('This value should not be blank', $this->client->getResponse()->getContent());
     }
 
     public function testPasswordMismatchFail()
     {
         $crawler = $this->client->request('GET', '/sign-up');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton(self::REGISTRATION_BUTTON)->form();
         $form['registration_form[name]'] = self::NAME;
@@ -125,15 +125,15 @@ class RegistrationTest extends FunctionalTestCase
         $form['registration_form[password][second]'] = 'yyy';
 
         $this->client->submit($form);
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
-        $this->assertContains('This value is not valid', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('This value is not valid', $this->client->getResponse()->getContent());
     }
 
     public function testEmailAlreadyExistsFail()
     {
         $crawler = $this->client->request('GET', '/sign-up');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton(self::REGISTRATION_BUTTON)->form();
         $form['registration_form[name]'] = self::NAME;
@@ -147,7 +147,7 @@ class RegistrationTest extends FunctionalTestCase
 
         $crawler = $this->client->request('GET', '/sign-up');
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
 
         $form = $crawler->selectButton(self::REGISTRATION_BUTTON)->form();
         $form['registration_form[name]'] = self::NAME;
@@ -156,7 +156,7 @@ class RegistrationTest extends FunctionalTestCase
         $form['registration_form[password][second]'] = self::PASSWORD;
 
         $this->client->submit($form);
-        $this->assertContains('Sign up', $this->client->getResponse()->getContent());
-        $this->assertContains('Email ' . self::EMAIL . ' has already been taken!', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Sign up', $this->client->getResponse()->getContent());
+        $this->assertStringContainsString('Email ' . self::EMAIL . ' has already been taken!', $this->client->getResponse()->getContent());
     }
 }
